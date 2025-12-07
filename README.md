@@ -1,79 +1,44 @@
 ```markdown
 # @cednieb/geo
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
-A small, focused set of geospatial utilities for JavaScript. 
-@cednieb/geo provides lightweight helpers for geometry teaching course 
-like distance calculations, bounding boxes, centroids, and simple spatial queries. 
-
-Designed to be modular and tree-shakeable so you can import only what you need.
-
-Features
-- Haversine and great-circle distance calculations
-- Bounding box (bbox) calculations and expansions
-- Centroid and basic geometry helpers
-- Point-in-polygon tests
-- Lightweight, zero-dependency core intended for both Node and browser environments
-- TypeScript type definitions
-- Import / Export
-- ScreenShots
-
-Table of contents
-- Browser usage
-- Development & testing
-- Contributing
-- License
 
 
-Browser usage
+Un petit ensemble d'utilitaires géospatiaux pour JavaScript, ciblé et léger.
 
-- With a <script> tag, if you publish a UMD build: include the UMD bundle and access window.cedniebGeo or similar (implement if desired).
+Idéal pour des cours de géométrie.
 
-Development & testing
+Constructions de figures.
 
-- Clone the repository
+Import / Export.
 
-Contributing
+Captures d'écran.
 
-Contributions are welcome! A few guidelines:
-1. Open an issue to discuss large changes before implementing them.
-2. Follow existing code style and include tests for new features.
-3. Run tests locally before submitting a PR.
+Utilisation dans le navigateur.
 
-Suggested labels:
-- bug
-- enhancement
-- docs
+Contribution
 
+Les contributions sont les bienvenues ! Quelques règles :
+1. Ouvrez une issue pour discuter des changements importants avant de les implémenter.
+2. Suivez le style de code existant et ajoutez des tests pour les nouvelles fonctionnalités.
+3. Exécutez les tests localement avant d'envoyer une PR.
 
 Support
 
-For bugs and feature requests, please open an issue in the repository: https://github.com/cednieb/geo/issues
+Pour les bugs et demandes de fonctionnalités, ouvrez une issue dans le dépôt : https://github.com/cednieb/geo/issues
 
-License
+Licence
 
-MIT — see the LICENSE file for details.
+![Licence](https://img.shields.io/badge/license-MIT-blue.svg)]
 
-Maintainers
+Mainteneurs
 
 - cednieb (https://github.com/cednieb)
-
-Acknowledgements
-
-Built with simplicity and small surface area in mind — ideal for apps that need common geospatial helpers without a heavy dependency.
-
-Changelog
-
-See the repository releases or CHANGELOG.md for details on updates and releases.
-
-```
-
 
 # Interface
 ![1](Screenshot-Géométrie.png)
 
-# Screenshot
+# Capture d'écran
 ![2](Screenshot.png)
 
-# ScreenshotA4
+# CaptureA4
 ![3](ScreenshotA4.png)
+```
