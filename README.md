@@ -2,7 +2,11 @@
 # @cednieb/geo
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-A small, focused set of geospatial utilities for JavaScript and TypeScript. @cednieb/geo provides lightweight helpers for geometry teaching course like distance calculations, bounding boxes, centroids, and simple spatial queries. Designed to be modular and tree-shakeable so you can import only what you need.
+A small, focused set of geospatial utilities for JavaScript. 
+@cednieb/geo provides lightweight helpers for geometry teaching course 
+like distance calculations, bounding boxes, centroids, and simple spatial queries. 
+
+Designed to be modular and tree-shakeable so you can import only what you need.
 
 Features
 - Haversine and great-circle distance calculations
@@ -23,9 +27,6 @@ Table of contents
 
 Browser usage
 
-There are several ways to use the library in the browser:
-
-- With a bundler (Webpack/Rollup/Vite) — import as shown above.
 - With a <script> tag, if you publish a UMD build: include the UMD bundle and access window.cedniebGeo or similar (implement if desired).
 
 Development & testing
@@ -37,14 +38,13 @@ Contributing
 Contributions are welcome! A few guidelines:
 1. Open an issue to discuss large changes before implementing them.
 2. Follow existing code style and include tests for new features.
-3. Keep API additions small and focused.
-4. Run linters and tests locally before submitting a PR.
+3. Run tests locally before submitting a PR.
 
 Suggested labels:
 - bug
 - enhancement
 - docs
-- chore
+
 
 Support
 
@@ -60,7 +60,7 @@ Maintainers
 
 Acknowledgements
 
-Built with simplicity and small surface area in mind — ideal for apps that need common geospatial helpers without a heavy dependency like turf.
+Built with simplicity and small surface area in mind — ideal for apps that need common geospatial helpers without a heavy dependency.
 
 Changelog
 
