@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+<!-- version v0.30 -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Géométrie</title>
+  <link rel="stylesheet" href="geo.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Feuille A4 — Dessin sur repère</h1>
+      <div class="controls-top">
+        <label><input id="show-frame" type="checkbox" checked /> Cadre A4</label>
+
+        <label>Orientation:
+          <select id="orientation">
+            <option value="portrait">Portrait (21 x 29.7 cm)</option>
+            <option value="landscape">Paysage (29.7 x 21 cm)</option>
+          </select>
+        </label>
+
+        <label><input id="enable-dragging" type="checkbox" /> Drag</label>
+
+        <button id="zoom-in">Zoom +</button>
+        <button id="zoom-out">Zoom -</button>
+        <button id="reset-view">Reset</button>
+
+        <button id="clear-all">Tout effacer</button>
+
+        <label><input type="checkbox" id="show-axes" checked /> Axes</label>
+        <label><input type="checkbox" id="show-grid" checked /> Grille</label>
+        <label><input type="checkbox" id="show-mm"   checked /> mm</label>
+        <label><input type="checkbox" id="show-ticks" checked /> Graduations</label>
+
+        <button id="screenshot">Screenshot</button>
+
+        <button id="export-json">Export</button>
+        <button id="import-btn">Import</button>
+        <input id="import-file" type="file" accept=".json" style="display:none" />
+        <button id="toggle-labels" title="Basculer tous les noms">Toggle labels</button>
+        <button id="help-btn" title="Aide">?</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="left-pane">
+        <div class="canvas-wrap">
+          <canvas id="sheet"></canvas>
+        </div>
+
+        <div class="statusbar">
+          <div id="cursor-coords">Monde: (0,0) — Réel: (0,0)</div>
+        </div>
+      </section>
+
+      <aside class="right-pane">
+        <section class="create">
+          <h2>Créer</h2>
+
+          <div class="tabs" id="main-tabs">
+            <button data-type="point" class="tab active">Point</button>
+            <button data-type="line" class="tab">Ligne</button>
+            <button data-type="droite" class="tab">Droite (∞)</button>
+            <button data-type="parallel" class="tab">Parallèle</button>
+            <button data-type="perp" class="tab">Perpendiculaire</button>
+            <button data-type="circle" class="tab">Cercle</button>
+            <button data-type="arc" class="tab">Arc</button>            
+            <button data-type="triangle" class="tab">Triangle</button>
+            <button data-type="intersections" class="tab">Intersections</button>
+            <button data-type="text" class="tab">Texte</button>
+          </div>
+
+          <form id="create-form">
+            <div id="form-fields"></div>
+            <div class="form-actions">
+              <button type="submit" id="create-submit">Créer</button>
+              <button type="button" id="create-reset">Réinitialiser le formulaire</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="objects-list">
+          <h2>Objets</h2>
+          <ul id="objects"></ul>
+        </section>
+      </aside>
+    </main>
+
+    <footer>
+      <small>Coordonnées monde = cm (origine au centre). Coordonnées réelles = pixels canvas.</small>
+    </footer>
+  </div>
+
+  <!-- Modal aide -->
+  <div id="help-modal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button id="help-close" class="modal-close" title="Fermer">✕</button>
+      <h2>Aide — Utilisation rapide</h2>
+      <p>
+        - Onglets : Point, Ligne, Cercle, Arc, Perpendiculaire, Triangle, Droite (∞), Parallèle, Intersections, Texte.<br/>
+        - "Triangle" crée deux segments AS et BS à partir du segment AB sélectionné et du point S.<br/>
+        - "Droite (∞)" crée une droite infinie ; "Convertir" permet de convertir droite ⇄ segment visible (clip aux bords).<br/>
+        - Texte : options fill & stroke + styles gras/italique/souligné/barré.
+      </p>
+    </div>
+  </div>
+
+  <script src="geo.js"></script>
+</body>
+</html>
