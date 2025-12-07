@@ -1,10 +1,8 @@
 ```markdown
 # @cednieb/geo
-
-[![npm version](https://img.shields.io/npm/v/@cednieb/geo.svg)](https://www.npmjs.com/package/@cednieb/geo)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-A small, focused set of geospatial utilities for JavaScript and TypeScript. @cednieb/geo provides lightweight helpers for common geographic tasks like distance calculations, bounding boxes, centroids, and simple spatial queries. Designed to be modular and tree-shakeable so you can import only what you need.
+A small, focused set of geospatial utilities for JavaScript and TypeScript. @cednieb/geo provides lightweight helpers for geometry teaching course like distance calculations, bounding boxes, centroids, and simple spatial queries. Designed to be modular and tree-shakeable so you can import only what you need.
 
 Features
 - Haversine and great-circle distance calculations
@@ -13,6 +11,8 @@ Features
 - Point-in-polygon tests
 - Lightweight, zero-dependency core intended for both Node and browser environments
 - TypeScript type definitions
+- Import / Export
+- ScreenShots
 
 Table of contents
 - Browser usage
@@ -31,11 +31,6 @@ There are several ways to use the library in the browser:
 Development & testing
 
 - Clone the repository
-- Install dependencies: npm install
-- Run tests (if tests are provided): npm test
-- Build: npm run build
-
-(Adjust commands if your repo uses a different workflow.)
 
 Contributing
 
@@ -50,12 +45,6 @@ Suggested labels:
 - enhancement
 - docs
 - chore
-
-Publishing
-
-- Bump the package version in package.json
-- Build the distributable (if needed)
-- Publish to npm: npm publish --access public (for scoped packages, confirm access settings)
 
 Support
 
