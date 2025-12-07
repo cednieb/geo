@@ -25,16 +25,15 @@ Support
 
 Pour les bugs et demandes de fonctionnalités, ouvrez une issue dans le dépôt : https://github.com/cednieb/geo/issues
 
-Licence
-
-![Licence](https://img.shields.io/badge/license-MIT-blue.svg)
-
 Mainteneurs
 
 - cednieb (https://github.com/cednieb)
 
 
 ```
+
+#Licence
+![Licence](https://img.shields.io/badge/license-MIT-blue.svg)
 
 # Interface
 ![1](Screenshot-Géométrie.png)
