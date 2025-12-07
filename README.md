@@ -27,7 +27,7 @@ Pour les bugs et demandes de fonctionnalités, ouvrez une issue dans le dépôt 
 
 Licence
 
-![Licence](https://img.shields.io/badge/license-MIT-blue.svg)]
+![Licence](https://img.shields.io/badge/license-MIT-blue.svg)
 
 Mainteneurs
 
