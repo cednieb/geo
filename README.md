@@ -1,4 +1,3 @@
-<br/>
 ![Titre](Titre.png)
 <br/>
 <br/>
