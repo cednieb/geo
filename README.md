@@ -1,22 +1,23 @@
 ![Titre](Titre.png)
-<br/>
+
 <br/>Un petit ensemble d'utilitaires géospatiaux pour JavaScript, ciblé et léger.
-<br/>
+
 <br/>Idéal pour des cours de géométrie.
-<br/>
+
 <br/>Constructions de figures.
-<br/>
+
 <br/>Import / Export.
-<br/>
+
 <br/>Captures d'écran.
-<br/>
-<br/>Afiicher / masquer la grille en cm ou en mm , les axes et les graduations
-<br/>
+
+<br/>Afiicher / masquer la grille en cm ou en mm , les axes et les graduations.
+
 <br/>Utilisation dans le navigateur.
 
 
 # Contributions
-<br/>Les contributions sont les bienvenues ! Quelques règles :
+<br/>Les contributions sont les bienvenues ! 
+<br/>Quelques règles :
 <br/>1. Ouvrez une issue pour discuter des changements importants avant de les implémenter.
 <br/>2. Suivez le style de code existant et ajoutez des tests pour les nouvelles fonctionnalités.
 <br/>3. Exécutez les tests localement avant d'envoyer une PR.
