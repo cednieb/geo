@@ -1,8 +1,5 @@
 <br/>
-# Interface
-![titre](Titre.png)
-<br/>
-<br/># @cednieb/geo
+![Titre](Titre.png)
 <br/>
 <br/>
 <br/>Un petit ensemble d'utilitaires géospatiaux pour JavaScript, ciblé et léger.
