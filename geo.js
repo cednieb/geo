@@ -10,7 +10,7 @@
 
 (() => {
   // ---------- Config ----------
-  const version = 0.30;
+  const version = 0.31;
   const A4 = { w: 21, h: 29.7 }; // cm
   const EPS = 1e-6;
   const DUP_EPS = 1e-3;
@@ -47,8 +47,12 @@
   const zoomInBtn = document.getElementById('zoom-in');
   const zoomOutBtn = document.getElementById('zoom-out');
   const resetBtn = document.getElementById('reset-view');
+  
   const clearBtn = document.getElementById('clear-all');
+  
   const screenshotBtn = document.getElementById('screenshot');
+  const screenshotBtnA4 = document.getElementById('screenshotA4'); 
+  
   const exportBtn = document.getElementById('export-json');
 
   const showAxesChk = document.getElementById('show-axes');
@@ -108,7 +112,131 @@
     scale = Math.min(sx, sy);
     view.offsetX = 0; view.offsetY = 0;
     requestRender();
+  }  
+  
+  // ---------- Screenshot A4 ----------
+  
+async function screenshotA4ResetAndCapture(canvas, options = {}) {
+  const {
+    dpi = 300,
+    returnBlob = true,
+    mime = 'image/png',
+    quality = 0.92,
+    background = null
+  } = options;
+
+  if (!(canvas instanceof HTMLCanvasElement)) {
+    throw new TypeError('Le premier argument doit être un élément <canvas>.');
   }
+  if (typeof worldToScreen !== 'function') {
+    throw new Error('worldToScreen(wx, wy) introuvable.');
+  }
+  if (typeof fitToCanvas !== 'function') {
+    throw new Error('fitToCanvas() introuvable.');
+  }
+
+  // 1) Reset zoom / position
+  fitToCanvas();
+
+  // 2) Attendre le rendu -> on attend deux frames pour laisser le rendu et potentiels DOM updates
+  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+  // 3) Récupérer orientation
+  const orientation = (typeof orientationSelect !== 'undefined' && orientationSelect.value) ? orientationSelect.value : 'portrait';
+
+  // 4) Dimensions A4 en cm (ton monde est en cm)
+  const A4 = { w: 21.0, h: 29.7 };
+  const wCm = orientation === 'landscape' ? A4.h : A4.w;
+  const hCm = orientation === 'landscape' ? A4.w : A4.h;
+
+  // 5) Calculer les 4 coins en coordonnées monde (origine au centre)
+  // top-left, top-right, bottom-right, bottom-left
+  const halfW = wCm / 2;
+  const halfH = hCm / 2;
+  const worldCorners = [
+    { wx: -halfW, wy: +halfH }, // TL
+    { wx: +halfW, wy: +halfH }, // TR
+    { wx: +halfW, wy: -halfH }, // BR
+    { wx: -halfW, wy: -halfH }  // BL
+  ];
+
+  // 6) Convertir ces coins en coordonnées écran CSS via worldToScreen
+  const screenCornersCss = worldCorners.map(p => {
+    const s = worldToScreen(p.wx, p.wy);
+    return { x: s.x, y: s.y };
+  });
+
+  // 7) Trouver bounding box CSS (minX,minY -> maxX,maxY)
+  const xs = screenCornersCss.map(p => p.x);
+  const ys = screenCornersCss.map(p => p.y);
+  const minX_css = Math.min(...xs);
+  const maxX_css = Math.max(...xs);
+  const minY_css = Math.min(...ys);
+  const maxY_css = Math.max(...ys);
+
+  // 8) Convertir CSS px -> buffer px (canvas.width/height)
+  const cssW = canvas.clientWidth || canvas.width || 1;
+  const cssH = canvas.clientHeight || canvas.height || 1;
+  const ratioX = canvas.width / cssW;
+  const ratioY = canvas.height / cssH;
+
+  let sxBuf = Math.round(minX_css * ratioX);
+  let syBuf = Math.round(minY_css * ratioY);
+  let sWidthBuf = Math.round((maxX_css - minX_css) * ratioX);
+  let sHeightBuf = Math.round((maxY_css - minY_css) * ratioY);
+
+  // 9) Clamp source rect dans le buffer du canvas
+  const maxW = canvas.width;
+  const maxH = canvas.height;
+
+  const rectOutside = (sxBuf + sWidthBuf <= 0) || (syBuf + sHeightBuf <= 0) || (sxBuf >= maxW) || (syBuf >= maxH);
+  if (!rectOutside) {
+    if (sxBuf < 0) { sWidthBuf += sxBuf; sxBuf = 0; }
+    if (syBuf < 0) { sHeightBuf += syBuf; syBuf = 0; }
+    if (sxBuf + sWidthBuf > maxW) sWidthBuf = maxW - sxBuf;
+    if (syBuf + sHeightBuf > maxH) sHeightBuf = maxH - syBuf;
+    sWidthBuf = Math.max(0, sWidthBuf);
+    sHeightBuf = Math.max(0, sHeightBuf);
+  } else {
+    sWidthBuf = 0;
+    sHeightBuf = 0;
+  }
+
+  // 10) Calculer taille de sortie en pixels au DPI demandé (cm -> inches -> px)
+  const cmToPxAtDpi = (cm, dpiVal) => Math.round((cm / 2.54) * dpiVal);
+  const targetW = cmToPxAtDpi(wCm, dpi);
+  const targetH = cmToPxAtDpi(hCm, dpi);
+
+  // 11) Créer canvas de sortie et dessiner (redimensionnement)
+  const out = document.createElement('canvas');
+  out.width = targetW;
+  out.height = targetH;
+  const ctx = out.getContext('2d');
+
+  // Fond si demandé ou si jpeg
+  if (background) {
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, out.width, out.height);
+  } else if (mime === 'image/jpeg') {
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, out.width, out.height);
+  }
+
+  if (sWidthBuf > 0 && sHeightBuf > 0) {
+    ctx.drawImage(canvas, sxBuf, syBuf, sWidthBuf, sHeightBuf, 0, 0, targetW, targetH);
+  } else {
+    // zone A4 complètement hors du canvas : on laisse le canvas de sortie vierge / fond appliqué
+  }
+
+  // 12) Retourner Blob ou dataURL
+  if (returnBlob) {
+    return await new Promise((resolve) => out.toBlob(resolve, mime, quality));
+  } else {
+    return out.toDataURL(mime, quality);
+  }
+}  
+  
+  
 
   // ---------- State ----------
   let showAxes = true, showGrid = true, showTicks = true, showMM = false;
@@ -461,8 +589,26 @@
   zoomInBtn.addEventListener('click', () => { const cx = canvas.clientWidth/2, cy = canvas.clientHeight/2; zoomAtScreen(cx, cy, 1.12); });
   zoomOutBtn.addEventListener('click', () => { const cx = canvas.clientWidth/2, cy = canvas.clientHeight/2; zoomAtScreen(cx, cy, 1/1.12); });
   resetBtn.addEventListener('click', fitToCanvas);
+  
   clearBtn.addEventListener('click', () => { objects.length = 0; updateObjectsListUI(); requestRender(); });
+  
   screenshotBtn.addEventListener('click', () => { const dataURL = canvas.toDataURL('image/png'); const a = document.createElement('a'); a.href = dataURL; a.download = 'sheet-screenshot.png'; a.click(); });
+  
+  screenshotBtnA4.addEventListener('click', async () => {
+  try {
+    const blob = await screenshotA4ResetAndCapture(canvas, { dpi: 300, returnBlob: true });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sheet-A4-screenshot.png';
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error('Erreur capture A4 :', err);
+  }
+});
+  
+  
 
   exportBtn.addEventListener('click', () => {
     const payload = { orientation: orientationSelect.value, view:{offsetX:view.offsetX, offsetY:view.offsetY, scale}, showAxes, showGrid, showTicks, showMM, objects };
@@ -499,6 +645,7 @@
   showTicksChk.addEventListener('change', (e) => { showTicks = e.target.checked; requestRender(); });
   showMMChk.addEventListener('change', (e) => { showMM = e.target.checked; requestRender(); });
   showFrameChk && showFrameChk.addEventListener('change', () => requestRender());
+  
   orientationSelect.addEventListener('change', fitToCanvas);
 
   /*

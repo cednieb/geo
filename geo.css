@@ -1,4 +1,4 @@
-/* version v0.30 */
+/* version v0.31 */
 * { box-sizing: border-box; }
 body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin: 0; background: #f5f6fa; color: #222; }
 .app { display: flex; flex-direction: column; height: 100vh; }
@@ -69,3 +69,19 @@ form { display:block; }
   .right-pane { width:320px; }
   header { flex-direction:column; align-items:flex-start; gap:6px;}
 }
+
+.controls-top select
+{
+background-color: #3a6ea5;
+color: #ffffff;
+ }
+
+.controls-top button
+{
+background-color: #3a6ea5;
+color: #ffffff;
+font-family: Georgia, serif;
+text-decoration: none;
+vertical-align: middle;
+}
+   
