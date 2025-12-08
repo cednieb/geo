@@ -1,4 +1,4 @@
-/* version v0.31 */
+/* version v0.32 */
 * { box-sizing: border-box; }
 body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin: 0; background: #f5f6fa; color: #222; }
 .app { display: flex; flex-direction: column; height: 100vh; }
@@ -11,7 +11,7 @@ main { display:flex; flex:1; overflow:hidden; }
 .canvas-wrap { flex:1; border:1px solid #dfe4ef; background: #fff; display:flex; align-items:center; justify-content:center; position:relative; }
 canvas { width:100%; height:100%; display:block; cursor:crosshair; }
 
-.right-pane { width:460px; background:#fff; border-left:1px solid #e6e9f2; padding:12px; overflow:auto; }
+.right-pane { width:460px; background:#fff; border-left:1px solid #e6e9f2; padding:12px; overflow-y:hidden;} /*overflow:auto;*/
 .right-pane h2 { margin-top:0; }
 .tabs { display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap; }
 .tab { padding:6px 8px; border:1px solid #d0d6ea; background:#f8f9fb; cursor:pointer; }
@@ -26,7 +26,8 @@ form { display:block; }
 .form-actions button { padding:6px 10px; }
 
 /* Objects list */
-.objects-list ul { list-style:none; padding:0; margin:0; max-height:50vh; overflow:auto; }
+.objects-list {  overflow-y: hidden;}
+.objects-list ul { list-style:none; padding:0; margin:0; max-height:50vh; overflow:auto; } 
 .objects-list li { padding:8px; border:1px solid #eef1fa; margin-bottom:6px; display:flex; align-items:center; gap:8px; background:#fff;}
 .obj-meta { flex:1; display:flex; flex-direction:column; }
 .obj-actions { display:flex; gap:6px; align-items:center; }
@@ -64,12 +65,7 @@ form { display:block; }
 /* text preview */
 .text-preview { border:1px dashed #d0d6ea; padding:8px; background:#fff; min-height:50px; margin-top:6px; }
 
-/* small responsive */
-@media (max-width:900px) {
-  .right-pane { width:320px; }
-  header { flex-direction:column; align-items:flex-start; gap:6px;}
-}
-
+/* top */
 .controls-top select
 {
 background-color: #3a6ea5;
@@ -84,4 +80,16 @@ font-family: Georgia, serif;
 text-decoration: none;
 vertical-align: middle;
 }
+
+/* menu separator  */
+.controls-top label {padding-right:10px; border-right:3px solid #3a6ea5;}
+.controls-top  button{ /* */}
+
+/* small responsive */
+@media (max-width:900px) {
+  .right-pane { width:320px; }
+  header { flex-direction:column; align-items:flex-start; gap:6px;}
+}
+
+
    

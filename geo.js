@@ -10,7 +10,7 @@
 
 (() => {
   // ---------- Config ----------
-  const version = 0.31;
+  const version = 0.32;
   const A4 = { w: 21, h: 29.7 }; // cm
   const EPS = 1e-6;
   const DUP_EPS = 1e-3;
